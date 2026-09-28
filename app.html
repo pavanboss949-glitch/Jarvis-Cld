@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jarvis — AI Assistant</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cg transform='rotate(-30 12 12)'%3E%3Ccircle cx='7.3' cy='3.2' r='1.45'/%3E%3Crect x='5.5' y='4.7' width='3.6' height='14.6' rx='1.8'/%3E%3Crect x='14.9' y='4.7' width='3.6' height='14.6' rx='1.8'/%3E%3Ccircle cx='16.7' cy='20.8' r='1.45'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ── SIDEBAR ─────────────────────────────────────────────────── -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="sidebar-brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <g transform="rotate(-30 12 12)">
+            <circle cx="7.3" cy="3.2" r="1.45"/>
+            <rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/>
+            <rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/>
+            <circle cx="16.7" cy="20.8" r="1.45"/>
+          </g>
+        </svg>
+        <span class="brand-name">Jarvis<span class="brand-suffix">.ai</span></span>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="App navigation">
+      <a href="#" class="nav-item active" data-view="tasks" aria-current="page">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2"/>
+          <path d="M7 9h10M7 13h7M7 17h5"/>
+        </svg>
+        Tasks
+        <span class="nav-badge" id="tasks-badge" style="display:none"></span>
+      </a>
+      <a href="#" class="nav-item" data-view="schedule">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <path d="M8 2v4M16 2v4M3 10h18"/>
+        </svg>
+        Schedule
+      </a>
+      <a href="#" class="nav-item" data-view="chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Chat
+        <span class="nav-dot" id="chat-dot"></span>
+      </a>
+      <a href="#" class="nav-item" data-view="reminders">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        Reminders
+      </a>
+      <a href="#" class="nav-item" data-view="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="ai-status">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-label">Jarvis Online</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div id="sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- ── MAIN CONTENT ─────────────────────────────────────────────── -->
+  <div id="main-wrap">
+
+    <!-- Mobile topbar -->
+    <div class="mobile-topbar">
+      <button id="sidebar-toggle" aria-label="Open navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <span class="mobile-title">Jarvis</span>
+    </div>
+
+    <main id="main-content">
+
+      <!-- ── TASKS VIEW ──────────────────────────────────────────── -->
+      <section id="view-tasks" class="view active" aria-label="Tasks">
+        <div class="view-header">
+          <div>
+            <h2>Tasks</h2>
+            <p class="view-subtitle" id="tasks-subtitle">Loading tasks…</p>
+          </div>
+          <button class="btn-primary" id="btn-add-task">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Task
+          </button>
+        </div>
+
+        <div class="filter-row" role="group" aria-label="Filter tasks">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="high">
+            <span class="dot-high"></span>High
+          </button>
+          <button class="filter-pill" data-filter="medium">
+            <span class="dot-medium"></span>Medium
+          </button>
+          <button class="filter-pill" data-filter="low">
+            <span class="dot-low"></span>Low
+          </button>
+          <button class="filter-pill" data-filter="completed">Done</button>
+        </div>
+
+        <div id="task-grid" class="task-grid" role="list"></div>
+
+        <!-- Empty state -->
+        <div id="tasks-empty" class="empty-state" style="display:none">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.3" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2"/>
+            <path d="M7 9h10M7 13h7"/>
+          </svg>
+          <p>No tasks yet. Add your first task!</p>
+        </div>
+      </section>
+
+      <!-- ── SCHEDULE VIEW ───────────────────────────────────────── -->
+      <section id="view-schedule" class="view" aria-label="Schedule">
+        <div class="view-header">
+          <div>
+            <h2>Schedule</h2>
+            <p class="view-subtitle" id="schedule-date"></p>
+          </div>
+          <button class="btn-primary" id="btn-optimize">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/>
+            </svg>
+            Optimize with AI
+          </button>
+        </div>
+
+        <!-- Pomodoro -->
+        <div class="pomodoro-card">
+          <div class="pomo-left">
+            <div class="pomo-label" id="pomo-label">Focus Session</div>
+            <div class="pomo-timer" id="pomo-timer">25:00</div>
+            <div class="pomo-progress">
+              <div class="pomo-bar" id="pomo-bar" style="width:100%"></div>
+            </div>
+          </div>
+          <div class="pomo-actions">
+            <button class="btn-primary" id="btn-pomo-start">Start</button>
+            <button class="btn-secondary" id="btn-pomo-reset">Reset</button>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="section-heading">
+          Today's Schedule
+          <span class="section-note" id="schedule-note"></span>
+        </div>
+        <div id="timeline" class="timeline" role="list"></div>
+        <div id="schedule-empty" class="empty-state" style="display:none">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.3" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <path d="M8 2v4M16 2v4M3 10h18"/>
+          </svg>
+          <p>No schedule yet. Click "Optimize with AI" to generate one from your tasks.</p>
+        </div>
+      </section>
+
+      <!-- ── CHAT VIEW ───────────────────────────────────────────── -->
+      <section id="view-chat" class="view chat-view" aria-label="Chat with Jarvis">
+        <div class="chat-header">
+          <div class="chat-avatar" aria-hidden="true">J</div>
+          <div class="chat-meta">
+            <div class="chat-name">Jarvis</div>
+            <div class="chat-subtitle" id="chat-status">Your AI assistant</div>
+          </div>
+          <button class="btn-secondary btn-sm" id="btn-clear-chat" title="Clear chat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Clear
+          </button>
+        </div>
+
+        <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-label="Chat messages"></div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea id="chat-input"
+              placeholder="Ask Jarvis anything — tasks, schedule, priorities…"
+              rows="1"
+              aria-label="Message to Jarvis"></textarea>
+            <button id="btn-send" class="btn-send" aria-label="Send message" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+            </button>
+          </div>
+          <p class="chat-hint">Press Enter to send · Shift+Enter for new line</p>
+        </div>
+      </section>
+
+      <!-- ── REMINDERS VIEW ──────────────────────────────────────── -->
+      <section id="view-reminders" class="view" aria-label="Reminders">
+        <div class="view-header">
+          <div>
+            <h2>Reminders</h2>
+            <p class="view-subtitle">Browser notifications for your schedule</p>
+          </div>
+          <button class="btn-secondary" id="btn-notif-toggle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            Enable Notifications
+          </button>
+        </div>
+
+        <div class="notif-status-bar" id="notif-status-bar" style="display:none"></div>
+
+        <!-- Add reminder form -->
+        <div class="add-reminder-card">
+          <h3 class="card-heading">New Reminder</h3>
+          <div class="reminder-form">
+            <input id="reminder-text" type="text" placeholder="What do you want to be reminded about?" class="form-input">
+            <input id="reminder-time" type="datetime-local" class="form-input">
+            <button class="btn-primary" id="btn-add-reminder">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Reminder
+            </button>
+          </div>
+        </div>
+
+        <div class="section-heading">Upcoming Reminders</div>
+        <div id="reminders-list" class="reminders-list" role="list"></div>
+        <div id="reminders-empty" class="empty-state" style="display:none">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.3" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <p>No reminders yet. Add one above!</p>
+        </div>
+      </section>
+
+      <!-- ── SETTINGS VIEW ───────────────────────────────────────── -->
+      <section id="view-settings" class="view" aria-label="Settings">
+        <div class="view-header">
+          <h2>Settings</h2>
+        </div>
+
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>Pomodoro Timer</h3>
+            <p>Customize your focus and break intervals.</p>
+            <div class="settings-row">
+              <label for="pomo-focus-min">Focus duration (minutes)</label>
+              <input id="pomo-focus-min" type="number" min="1" max="120" value="25" class="form-input form-input--sm">
+            </div>
+            <div class="settings-row">
+              <label for="pomo-break-min">Break duration (minutes)</label>
+              <input id="pomo-break-min" type="number" min="1" max="60" value="5" class="form-input form-input--sm">
+            </div>
+            <button class="btn-primary" id="btn-save-pomo">Save</button>
+          </div>
+
+          <div class="settings-card">
+            <h3>API Connection</h3>
+            <p>Jarvis uses Claude (claude-sonnet-5) for AI features.</p>
+            <div class="settings-row">
+              <label>Backend status</label>
+              <span class="api-status" id="api-status-text">Checking…</span>
+            </div>
+            <button class="btn-secondary" id="btn-check-api">Check connection</button>
+          </div>
+
+          <div class="settings-card">
+            <h3>About Jarvis</h3>
+            <p>Your AI-powered productivity manager. Jarvis helps you manage tasks, optimise your schedule, and stay on top of your goals.</p>
+            <div class="about-meta">
+              <span>Version 1.0.0</span>
+              <a href="/" class="link-muted">Back to landing page →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main><!-- /#main-content -->
+  </div><!-- /#main-wrap -->
+
+</div><!-- /#app -->
+
+<!-- ── ADD TASK MODAL ──────────────────────────────────────────────── -->
+<div id="modal-task" class="modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-task-title">
+  <div class="modal-backdrop" id="modal-task-backdrop"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-task-title">New Task</h3>
+      <button class="modal-close" id="btn-cancel-task" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="task-title">Title <span class="required">*</span></label>
+        <input id="task-title" type="text" placeholder="What needs to be done?" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <label for="task-desc">Description</label>
+        <textarea id="task-desc" placeholder="Add details (optional)…" class="form-input form-textarea" rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="task-priority">Priority</label>
+          <select id="task-priority" class="form-input form-select">
+            <option value="high">🔴 High</option>
+            <option value="medium" selected>🟡 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="task-due">Due date</label>
+          <input id="task-due" type="date" class="form-input">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="task-category">Category</label>
+        <input id="task-category" type="text" placeholder="e.g. Work, Personal, Health" class="form-input">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="btn-cancel-task-2">Cancel</button>
+      <button class="btn-primary" id="btn-save-task">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
